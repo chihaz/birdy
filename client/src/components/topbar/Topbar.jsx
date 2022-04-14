@@ -25,10 +25,6 @@ export default function Topbar() {
         </div>
       </div>
       <div className="topbarRight">
-        <div className="topbarLinks">
-          <span className="topbarLink">Acceuil</span>
-          <span className="topbarLink">Deconnexion</span>
-        </div>
         <div className="topbarIcons">
           <div className="topbarIconItem">
             <Person />

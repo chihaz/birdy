@@ -9,17 +9,26 @@ export default function Register() {
   const password = useRef();
   const passwordAgain = useRef();
   const history = useHistory();
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
+
+  /* avant d'envoyer les données on doit tout d'abord verifier 
+  que les mots de passes inserer sont bien identique */
   const handleClick = async (e) => {
     e.preventDefault();
     if (passwordAgain.current.value !== password.current.value) {
+     
       passwordAgain.current.setCustomValidity("Passwords don't match!");
     } else {
+      /* dans le cas ou tout les elements sont bien
+      inserer il faudra cree une variable user qui possedera les attributs cree  */
       const user = {
         username: username.current.value,
         email: email.current.value,
         password: password.current.value,
       };
+      /* puis on utilise un post pour inscrire l'utilisateur puis on utilise 
+      le hook history qui  nous permet de rediriger l'utilisateur vers la page de login */
       try {
         await axios.post("/auth/register", user);
         history.push("/login");
@@ -30,49 +39,52 @@ export default function Register() {
   };
 
   return (
-    <div className="login">
-      <div className="loginWrapper">
-        <div className="loginLeft">
-          <h3 className="loginLogo">Lamasocial</h3>
-          <span className="loginDesc">
-            Connect with friends and the world around you on Lamasocial.
-          </span>
-        </div>
-        <div className="loginRight">
-          <form className="loginBox" onSubmit={handleClick}>
-            <input
-              placeholder="Username"
-              required
-              ref={username}
-              className="loginInput"
-            />
-            <input
-              placeholder="Email"
-              required
-              ref={email}
-              className="loginInput"
-              type="email"
-            />
-            <input
-              placeholder="Password"
-              required
-              ref={password}
-              className="loginInput"
-              type="password"
-              minLength="6"
-            />
-            <input
-              placeholder="Password Again"
-              required
-              ref={passwordAgain}
-              className="loginInput"
-              type="password"
-            />
-            <button className="loginButton" type="submit">
-              Sign Up
-            </button>
-            <button className="loginRegisterButton">Log into Account</button>
-          </form>
+    <div className='bg-model'>
+        
+      <div>
+        <div className="container-login100">
+          <div className="wrap-login100">
+            <div>
+              <img src={PF+"birdyRBG.png"} className="logo" alt="Birdy"/>
+            </div>
+
+            <form onSubmit={handleClick}>
+              <span className="login100-form-title">
+                Inscription
+              </span>
+
+              <div className="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+                <input className="input100" type="email" ref={email} name="email" placeholder="Email"/>
+                <span className="focus-input100"></span>
+               
+              </div>
+              
+              <div className="wrap-input100 validate-input">
+                <input className="input100" type="text" ref={username} name="Login" placeholder="@Login"/>
+                <span className="focus-input100"></span>
+               
+              </div>
+
+              <div className="wrap-input100 validate-input" data-validate = "Saisir un mot de passe">
+                <input className="input100" type="password" ref={password} name="pass" placeholder="Mot de passe"/>
+                <span className="focus-input100"></span>
+                
+              </div>
+              <div className="wrap-input100 validate-input" data-validate = "Saisir un mot de passe">
+                <input className="input100" type="password" ref={passwordAgain} name="pass" placeholder="Confirmer le mot de passe"/>
+                <span className="focus-input100"></span>
+                
+              </div>
+              
+              <div className="container-login100-form-btn">
+                <button className="login100-form-btn" type="submit">
+                  Incription
+                </button>
+              </div>
+
+             
+            </form>
+          </div>
         </div>
       </div>
     </div>
