@@ -41,6 +41,8 @@ router.delete("/:id", async (req, res) => {
 });
 
 //get a user
+//nous utilisant une query pour recuperer l'utilisateur pour dire si on veut recuperer
+//les infos de l'utilisateur en utilisant a la fois le username ou le id
 router.get("/", async (req, res) => {
   const userId = req.query.userId;
   const username = req.query.username;

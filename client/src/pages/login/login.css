@@ -71,7 +71,10 @@ button:hover {
   max-width: 100%;
 }
 
-
+.error-message{
+  color: #c80000;
+  font-weight: bold;
+}
 
 .login100-form {
   width: 290px;

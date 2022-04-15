@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useRef } from "react";
+import { useRef ,useState} from "react";
 import "./register.css";
 import { useHistory } from "react-router";
 
@@ -10,16 +10,14 @@ export default function Register() {
   const passwordAgain = useRef();
   const history = useHistory();
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-
+  const [text, setText]=useState("");
 
   /* avant d'envoyer les données on doit tout d'abord verifier 
   que les mots de passes inserer sont bien identique */
   const handleClick = async (e) => {
     e.preventDefault();
-    if (passwordAgain.current.value !== password.current.value) {
-     
-      passwordAgain.current.setCustomValidity("Passwords don't match!");
-    } else {
+
+    
       /* dans le cas ou tout les elements sont bien
       inserer il faudra cree une variable user qui possedera les attributs cree  */
       const user = {
@@ -33,9 +31,16 @@ export default function Register() {
         await axios.post("/auth/register", user);
         history.push("/login");
       } catch (err) {
-        console.log(err);
+        if(err.response.status==402){
+          setText("Les mots de passe sont differents");
+          passwordAgain.current.setCustomValidity("Passwords don't match!");
+        }else if(err.response.status==401){
+          setText("Login deja pris");
+        }else{
+          setText("Erreur interne"); 
+        }
       }
-    }
+    
   };
 
   return (
@@ -75,7 +80,9 @@ export default function Register() {
                 <span className="focus-input100"></span>
                 
               </div>
-              
+              <div>
+                <p className="error-message">{text}</p>
+              </div>
               <div className="container-login100-form-btn">
                 <button className="login100-form-btn" type="submit">
                   Incription
